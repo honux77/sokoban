@@ -1,0 +1,41 @@
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# for vim
+*.swp
+
+# for vs11
+*.sdf
+*.suo
+Debug/
+Release/
+
+# for other
+test
+tags
+cscope.files
+
+#python
+*.pyc
+
+#java
+*.class
+
+#OSX
+.DS_Store
+
