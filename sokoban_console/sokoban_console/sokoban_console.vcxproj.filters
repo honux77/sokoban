@@ -21,7 +21,7 @@
     <ClCompile Include="sokoban.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="fileio.cpp">
+    <ClCompile Include="map.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

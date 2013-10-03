@@ -1,31 +1,24 @@
-#ifndef MAP_H
-#define MAP_H
+#include "map.h"
 
-/**
-map.h
-load & save mapdata
-**/
 
-#include <fstream>
-
-#define WMAX 20;
-#define HMAX 20;
-#define MAGIC 0xABCDDCBA
-
+/*
 class MapData {
 private:
 	int w;
-	int h;		
+	int h;	
 	char map[HMAX][WMAX];
-
+	string 
 
 public:
-	MapData(const char* filename);
+	MapData(const char* filename);	
 	void loadMap(int stage);
 	void saveMap(const MapData& map);	
 	void setMap(int w, int h, char* map[]);
 	//for debug
 	void printtMap();
 };
-
-#endif
+*/
+MapData::MapData(const char* filename) 
+{
+	mapfile = filename;
+}
