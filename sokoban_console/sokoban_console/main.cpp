@@ -4,32 +4,7 @@
    				            1993. 8
 (2013.10: some bug fix)
 ************************************/
-#include <conio.h>
-#include <iostream>
-
-#define KEY_ESC 27
-#define KEY_ARROW 224
-#define KEY_UP 72
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
-#define KEY_DOWN 80
-#define KEY_RESET 114
-
-#define LEFT KEY_LEFT
-#define RIGHT KEY_RIGHT
-#define UP KEY_UP
-#define DOWN KEY_DOWN
-
-#define WALL 1
-#define PLAYER 2
-#define BALL 3
-#define EXIT 4
-
-#define MW 10
-
-int getInput();
-void updateGame(int direction);
-void draw();
+#include "sokoban.h"
 
 int map[MW][MW] = { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},					
 					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
