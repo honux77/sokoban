@@ -16,15 +16,10 @@
 #define UP KEY_UP
 #define DOWN KEY_DOWN
 
-#define WALL 0x1
-#define PLAYER 0x10
-#define BALL 0x100
-#define EXIT 0x1000
-
-#define MW 10
-
 int getInput();
 void updateGame(int direction);
 void draw();
+
+typedef enum MTYPE {SPACE=0x0,WALL=0x1, PLAYER=0x10, BALL=0x100, EXIT=0x1000};
 
 #endif

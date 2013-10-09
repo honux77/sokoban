@@ -5,33 +5,23 @@
 (2013.10: some bug fix)
 ************************************/
 #include "sokoban.h"
+#include "map.h"
 
-int map[MW][MW] = { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},					
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},					
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1} };
+
 
 //start data;
-int px, py, bx, by, ex, ey, turn;
+int px, py,turn;
 
 int main() {
 	using namespace std; 	
 	int key;			
-
-reset:
-	turn  = 0;
-	px = 4, py = 4;
-	bx = 5, by = 4;
-	ex = 2, ey = 2;	
-
-	cout << "Simple Push Push Game by Hobytes ver. 0.2" << endl;
-	cout << "Press space bar to start..." << endl;	
+	MapData map;
+	map.readMapFromText("stage1.txt");
+	map.printtMap();
+	map.freeMap();
+	//cout << "Simple Push Push Game by Hobytes ver. 0.2" << endl;
+	//cout << "Press space bar to start..." << endl;	
+	/*
 
 	while ((key = getInput() ) != KEY_ESC ) {
 		if (key == KEY_RESET) {
@@ -49,11 +39,13 @@ reset:
 			break;
 		}
 	}
-
+	*/
 	std::cout << "Thanks for playing!!" << endl;
 
 	return 0;
 }
+
+/*
 
 int getInput() {
 	int key = _getch();	
@@ -171,3 +163,5 @@ void draw() {
 	std::cout << "\nTurn: "<<  turn << std::endl;
 	std::cout << "Press r to reset,or esc to end." << std::endl;
 }
+
+*/

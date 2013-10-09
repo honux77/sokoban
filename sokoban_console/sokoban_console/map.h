@@ -6,26 +6,31 @@ map.h
 load & save mapdata
 **/
 
-#include <fstream>
 
-#define WMAX 20;
-#define HMAX 20;
-#define MAGIC 0xABCDDCBA
+#include <fstream>
+#include "sokoban.h"
+#define MAGIC 0xBAB01209
+#define MAX 64
 
 class MapData {
-private:
-	int w;
-	int h;		
-	char map[HMAX][WMAX];
 
+private:	
+	void initMap();
 
 public:
-	MapData(const char* filename);
-	void loadMap(int stage);
-	void saveMap(const MapData& map);	
-	void setMap(int w, int h, char* map[]);
-	//for debug
+	int w;
+	int h;
+	MTYPE **map;
+	
+	//MapData(const char* filename);
+	//void loadMap(int stage);
+	//void saveMap(const MapData& map);	
+	//void setMap(int w, int h, char* map[]);
+	
+	//for debug or test
+	void readMapFromText(const char *text);
 	void printtMap();
+	void freeMap();
 };
 
 #endif
