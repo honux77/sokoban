@@ -1,167 +1,130 @@
 /***********************************
- Very simple sokoban implementation 
-                         by Hobytes
-   				            1993. 8
+Very simple sokoban implementation 
+by Hobytes
+1993. 8
 (2013.10: some bug fix)
 ************************************/
 #include "sokoban.h"
 #include "map.h"
-
-
-
+#include <Windows.h>
 //start data;
 int px, py,turn;
 
 int main() {
+	char filename[20];
 	using namespace std; 	
-	int key;			
-	MapData map;
-	map.readMapFromText("stage1.txt");
-	map.printtMap();
-	map.freeMap();
-	//cout << "Simple Push Push Game by Hobytes ver. 0.2" << endl;
-	//cout << "Press space bar to start..." << endl;	
-	/*
+	int key, left, stage;			
+	MapData md;	
+	//bool exist;
+	cout << "Simple Push Push Game by Hobytes ver. 0.3" << endl;
+	cout << "Press space bar to start..." << endl;	
+	turn = 1;
+	stage = 1;
+	key = getInput();
 
-	while ((key = getInput() ) != KEY_ESC ) {
-		if (key == KEY_RESET) {
-			map[py][px] = 0;
-			map[by][bx] = 0;
+	while (true) {		
+		sprintf_s(filename,"stage%d.txt",stage);
+		if(!md.readMapFromText(filename, px, py)) break;			
+		Sleep(1500);
+		cout << endl << endl << "Stage " <<stage << endl;			
+		while(true) {			
 			system("cls");
-			goto reset;
-		}
-		turn++;
-		updateGame(key);
-		draw();
+			md.printMap();
+			if((left = md.leftBall()) == 0) {				
+				break;
+			}
+			cout <<"TURN: " <<turn <<"\tLEFT BALL: " << left << endl;
+			cout <<"(R) for Reset, (Esc) for escape! "<< endl;
 
-		if( bx == ex && by == ey) {
-			cout << "\nYou're very smart! Clear!!" << endl;
-			break;
+			key = getInput();
+			if (key == KEY_ESC) {
+				std::cout << "Thanks for playing!!" << endl;
+				return 0;				
+			}
+			if (key == KEY_RESET) {
+				md.resetMap(px, py);
+				turn = 1;
+				continue;
+			}
+			updateGame(key, md);		
 		}
+		//clear 1 stage
+		turn = 1;
+		md.freeMap();
+		std::cout << "Clear Stage " << stage <<endl;
+		Sleep(1500);
+		stage++;			
 	}
-	*/
+	system("cls");
+	std::cout << "You cleared All of Games" <<endl;
 	std::cout << "Thanks for playing!!" << endl;
-
+	Sleep(1500);
 	return 0;
 }
 
-/*
-
 int getInput() {
-	int key = _getch();	
-	std::cout << key << std::endl;
+	int key = _getch();		
 	if(key == KEY_ARROW )
 		key = _getch();
 	return key;
 }
+void updateGame(int key, MapData& md) {
 
-//check whether obj1 is in front of obj2
-int is_front(int direction, int x1, int y1, int x2, int y2) {
-	switch(direction) {
-	case LEFT:
-		if (y1 == y2 && (x1 + 1) == x2)
-			return 1;
+	int dx, dy, tx, ty,bx, by;
+	dx = dy = 0;
+	turn++;
+	switch(key) {
+	case KEY_LEFT:
+		dx = -1;
 		break;
-	case RIGHT:
-		if (y1 == y2 && (x1 - 1) == x2)
-			return 1;
+	case KEY_RIGHT:
+		dx = 1;
 		break;
-	case UP:
-		if (x1 == x2 && (y1 + 1) == y2)
-			return 1;
+	case KEY_DOWN:
+		dy = 1;
 		break;
-	case DOWN:
-		if (x1 == x2 && (y1 - 1) == y2)
-			return 1;
+	case KEY_UP:
+		dy = -1;
 		break;
+	default: //do nothing
+		return;
 	}
-	return 0;
-}
 
-int can_move(int direction, int x, int y) {
-	switch(direction) {
-	case LEFT:		
-		if (x <= 1 ) return 0;
+	//next way
+	tx = px + dx;
+	ty = py + dy;
+	bx = tx + dx;
+	by = ty + dy;
+
+	if (tx < 0 || tx >= md.w || ty < 0 || ty >= md.h) return; //out of range
+
+	switch (md.map[ty][tx]) {
+	case SPACE:
+		md.map[ty][tx] = PLAYER;				
 		break;
-	case RIGHT:
-		if (x >= MW - 2) return 0;		
+	case EXIT:
+		md.map[ty][tx] = PL_ON_EX;	
 		break;
-	case UP:
-		if (y <= 1) return 0;
+	case BALL:		
+		if(md.map[by][bx] == SPACE) {
+			md.map[by][bx] = BALL;			
+		} else if(md.map[by][bx] == EXIT) {
+			md.map[by][bx] = BL_ON_EX;					
+		} else return;
+		md.map[ty][tx] = PLAYER;				
 		break;
-	case DOWN:
-		if (y >= MW - 2) return 0;
+	case BL_ON_EX:		
+		if(md.map[by][bx] == SPACE) {
+			md.map[by][bx] = BALL;			
+		} else if(md.map[by][bx] == EXIT) {
+			md.map[by][bx] = BL_ON_EX;						
+		} else return;			
+		md.map[ty][tx] = PL_ON_EX;	
 		break;
+	case WALL: //impossible to move	
+	default: return;
 	}
-	return 1;
+	md.map[py][px] == PL_ON_EX ? md.map[py][px] = EXIT: md.map[py][px] = SPACE;	
+	px = tx, py = ty;
 }
 
-void move_obj(int direction, int& x, int& y) {
-	switch(direction) {
-	case LEFT:
-		x -= 1;
-		break;
-	case RIGHT:
-		x += 1;
-		break;
-	case UP:
-		y -= 1;
-		break;
-	case DOWN:
-		y += 1;
-		break;
-	}
-}
-
-void move(int direction) {
-	if (is_front(direction, bx, by, px, py ))
-		if(can_move(direction, bx, by)) {
-			move_obj(direction, bx, by);
-			move_obj(direction, px, py);
-		}
-		else
-			return;
-	else if (can_move(direction, px, py))
-		move_obj(direction, px,py);
-}			
-
-void updateGame(int direction) {
-	map[py][px] = 0;	
-	map[by][bx] = 0;		
-	
-	move(direction);	
-
-	map[py][px] = PLAYER;
-	map[by][bx] = BALL;	
-	map[ey][ex] = EXIT;
-}
-
-void draw() {
-	int i, j;
-	system("cls");
-	for( i = 0; i < MW; i++) {
-		for( j = 0; j < MW; j++) {
-			switch(map[i][j]) {
-				case WALL:
-					printf("*");
-					break;
-				case PLAYER:
-					printf("P");
-					break;
-				case BALL:
-					printf("O");
-					break;
-				case EXIT:
-					printf("X");
-					break;
-				default:
-					printf(" ");
-			}			
-		}
-		printf("\n");
-	}
-	std::cout << "\nTurn: "<<  turn << std::endl;
-	std::cout << "Press r to reset,or esc to end." << std::endl;
-}
-
-*/

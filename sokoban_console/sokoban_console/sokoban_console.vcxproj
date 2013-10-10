@@ -76,7 +76,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="sokoban.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="map.h" />
@@ -85,6 +84,7 @@
   <ItemGroup>
     <None Include="stage1.txt" />
     <None Include="stage2.txt" />
+    <None Include="stage3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
