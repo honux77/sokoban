@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{FE65B7E6-3740-4D73-A10B-C1920AD28326}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SokobanMapEditor", "WindowsFormsApplication1\SokobanMapEditor.csproj", "{FE65B7E6-3740-4D73-A10B-C1920AD28326}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
