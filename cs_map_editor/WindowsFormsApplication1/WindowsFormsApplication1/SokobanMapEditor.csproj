@@ -33,6 +33,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WindowsFormsApplication1.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>main.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,6 +73,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -78,16 +85,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\grass.jpg" />
     <None Include="Resources\goal.png" />
     <None Include="Resources\floor.png" />
     <None Include="Resources\dbox.png" />
     <None Include="Resources\char.png" />
     <None Include="Resources\bbox.png" />
-    <Content Include="Properties\bbox.png" />
-    <Content Include="Properties\char.png" />
-    <Content Include="Properties\dbox.png" />
-    <Content Include="Properties\floor.png" />
-    <Content Include="Properties\goal.png" />
+    <Content Include="main.ico" />
     <Content Include="Properties\wall.png" />
     <None Include="Resources\wall.png" />
   </ItemGroup>

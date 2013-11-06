@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -45,29 +48,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxW = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.mapDisplay = new System.Windows.Forms.PictureBox();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapDisplay)).BeginInit();
             this.SuspendLayout();
             // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Image = global::WindowsFormsApplication1.Properties.Resources.wall;
-            this.radioButton1.Location = new System.Drawing.Point(18, 56);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(44, 30);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged_1);
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButton6);
             this.groupBox1.Controls.Add(this.radioButton5);
             this.groupBox1.Controls.Add(this.radioButton4);
             this.groupBox1.Controls.Add(this.radioButton3);
@@ -75,10 +66,35 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(512, 186);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(222, 102);
+            this.groupBox1.Size = new System.Drawing.Size(222, 100);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "지형선택";
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Image = ((System.Drawing.Image)(resources.GetObject("radioButton6.Image")));
+            this.radioButton6.Location = new System.Drawing.Point(70, 56);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(46, 32);
+            this.radioButton6.TabIndex = 5;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Checked = true;
+            this.radioButton5.Image = global::WindowsFormsApplication1.Properties.Resources.floor;
+            this.radioButton5.Location = new System.Drawing.Point(18, 20);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(46, 32);
+            this.radioButton5.TabIndex = 4;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
             // 
             // radioButton4
             // 
@@ -86,7 +102,7 @@
             this.radioButton4.Image = global::WindowsFormsApplication1.Properties.Resources._char;
             this.radioButton4.Location = new System.Drawing.Point(168, 20);
             this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(44, 30);
+            this.radioButton4.Size = new System.Drawing.Size(46, 32);
             this.radioButton4.TabIndex = 3;
             this.radioButton4.UseVisualStyleBackColor = true;
             this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
@@ -97,7 +113,7 @@
             this.radioButton3.Image = global::WindowsFormsApplication1.Properties.Resources.bbox;
             this.radioButton3.Location = new System.Drawing.Point(118, 20);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(44, 30);
+            this.radioButton3.Size = new System.Drawing.Size(46, 32);
             this.radioButton3.TabIndex = 2;
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
@@ -108,11 +124,22 @@
             this.radioButton2.Image = global::WindowsFormsApplication1.Properties.Resources.goal;
             this.radioButton2.Location = new System.Drawing.Point(68, 20);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(44, 30);
+            this.radioButton2.Size = new System.Drawing.Size(46, 32);
             this.radioButton2.TabIndex = 1;
             this.radioButton2.TabStop = true;
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Image = global::WindowsFormsApplication1.Properties.Resources.grass;
+            this.radioButton1.Location = new System.Drawing.Point(18, 56);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(46, 32);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // comboBox1
             // 
@@ -181,7 +208,7 @@
             this.buttonResize.Name = "buttonResize";
             this.buttonResize.Size = new System.Drawing.Size(75, 23);
             this.buttonResize.TabIndex = 5;
-            this.buttonResize.Text = "Resize";
+            this.buttonResize.Text = "초기화";
             this.buttonResize.UseVisualStyleBackColor = true;
             this.buttonResize.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -226,60 +253,37 @@
             this.textBoxW.Name = "textBoxW";
             this.textBoxW.Size = new System.Drawing.Size(40, 21);
             this.textBoxW.TabIndex = 0;
-            this.textBoxW.Text = "16";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(302, 379);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(209, 379);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 12);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "위치표시라벨";
+            this.textBoxW.Text = "15";
             // 
             // mapDisplay
             // 
             this.mapDisplay.BackColor = System.Drawing.SystemColors.Window;
-            this.mapDisplay.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.floor;
             this.mapDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mapDisplay.Location = new System.Drawing.Point(26, 16);
             this.mapDisplay.Name = "mapDisplay";
-            this.mapDisplay.Size = new System.Drawing.Size(480, 300);
+            this.mapDisplay.Size = new System.Drawing.Size(480, 320);
             this.mapDisplay.TabIndex = 11;
             this.mapDisplay.TabStop = false;
             this.mapDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapDisplay_MouseDown);
+            this.mapDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapDisplay_MouseMove);
+            this.mapDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapDisplay_MouseUp);
             // 
-            // radioButton5
+            // label5
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Checked = true;
-            this.radioButton5.Image = global::WindowsFormsApplication1.Properties.Resources.floor;
-            this.radioButton5.Location = new System.Drawing.Point(18, 20);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(44, 30);
-            this.radioButton5.TabIndex = 4;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(669, 331);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Debugging";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 416);
-            this.Controls.Add(this.mapDisplay);
+            this.ClientSize = new System.Drawing.Size(742, 352);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.mapDisplay);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
@@ -317,11 +321,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxW;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonResize;
         private System.Windows.Forms.PictureBox mapDisplay;
         private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.Label label5;
     }
 }
 

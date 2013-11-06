@@ -9,99 +9,108 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    enum TILETYPE { FLOOR=0, WALL,BBOX, GOAL, CHARA};
+    enum TILETYPE { FLOOR = 0, WALL, BBOX, GOAL, CHARA, GRASS };
     public partial class MainForm : Form
     {
-        public Bitmap bmFloor;
-        public Bitmap bmBbox;
-        public Bitmap bmGoal;
-        public Bitmap bmWall;
-        public Bitmap bmChara;
-        const int TSIZE = 30; //tile size
-        const int MAXW = 16;
-        const int MAXH = 10;
+        public Bitmap bmFloor, bmBbox, bmGoal, bmWall, bmChara, bmGrass;
+        public Bitmap mapImage;
+        const int TSIZE = 32; //tile size
+        const int IW = 15;
+        const int IH = 10;
+        int mapw = IW;
+        int maph = IH;
         TILETYPE tileType = TILETYPE.FLOOR;
         TILETYPE[,] map;
+        Boolean isMouseDown;
         public MainForm()
         {
             InitializeComponent();
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            int x = int.Parse(textBoxW.Text);
-            int y = int.Parse(textBoxH.Text);
-            mapDisplay.Width = x * 30;
-            mapDisplay.Height = y * 30;
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
             bmFloor = new Bitmap(WindowsFormsApplication1.Properties.Resources.floor);
             bmBbox = new Bitmap(WindowsFormsApplication1.Properties.Resources.bbox);
             bmGoal = new Bitmap(WindowsFormsApplication1.Properties.Resources.goal);
             bmWall = new Bitmap(WindowsFormsApplication1.Properties.Resources.wall);
             bmChara = new Bitmap(WindowsFormsApplication1.Properties.Resources._char);
-
-            map = new TILETYPE[MAXH, MAXW];
-            for (int y = 0; y < MAXH; y++)
-                for (int x = 0; x < MAXW; x++)
+            bmGrass = new Bitmap(WindowsFormsApplication1.Properties.Resources.grass);
+            map = new TILETYPE[maph, mapw];
+            for (int y = 0; y < maph; y++)
+                for (int x = 0; x < mapw; x++)
                     map[y, x] = TILETYPE.FLOOR;
+            mapImage = new Bitmap(mapw * TSIZE, maph * TSIZE);
+            mapReset();
+        }
+
+        void mapReset()
+        {
+            Graphics g = Graphics.FromImage(mapImage);
+            for (int y = 0; y < maph; y++)
+                for (int x = 0; x < mapw; x++)
+                {
+                    int X = x * TSIZE;
+                    int Y = y * TSIZE;
+                    g.DrawImage(bmGrass, new Point(X, Y));
+                }
+            g.Dispose();
+            mapDisplay.Image = mapImage;
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            mapw = int.Parse(textBoxW.Text);
+            maph = int.Parse(textBoxH.Text);
+            mapDisplay.Width = mapw * TSIZE;
+            mapDisplay.Height = maph * TSIZE;
+            map = new TILETYPE[maph, mapw];
+            mapReset();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void mapDisplay_MouseDown(object sender, MouseEventArgs e)
         {
-            label5.Text = e.X + " : " + e.Y;
-            int w =  e.X / TSIZE;
-            int h = e.Y / TSIZE;
-            map[h, w] = tileType;
-
-            Graphics g = mapDisplay.CreateGraphics();
-            for (int y = 0; y < MAXH; y++)
-                for (int x = 0; x < MAXW; x++)
-                {
-                    int X = x * TSIZE;
-                    int Y = y * TSIZE;
-                    switch (map[y, x])
-                    {
-                        case TILETYPE.FLOOR:
-                            g.DrawImage(bmFloor, new Point(X, Y));
-                            break;
-                        case TILETYPE.WALL:
-                            g.DrawImage(bmWall, new Point(X, Y));
-                            break;
-                        case TILETYPE.BBOX:
-                            g.DrawImage(bmBbox, new Point(X, Y));
-                            break;
-                        case TILETYPE.GOAL:
-                            g.DrawImage(bmGoal, new Point(X, Y));
-                            break;
-                        case TILETYPE.CHARA:
-                            g.DrawImage(bmChara, new Point(X, Y));
-                            break;
-                    }
-                }
-            g.Dispose(); 
+            isMouseDown = true;
+            drawTileImage(e);
         }
 
-        private void radioButton1_CheckedChanged_1(object sender, EventArgs e)
+        void drawTileImage(MouseEventArgs e) {
+            label5.Text = e.X + " : " + e.Y;      
+
+            int w = e.X / TSIZE;
+            int h = e.Y / TSIZE;
+            map[h, w] = tileType;
+            Point p = new Point(w * TSIZE, h * TSIZE);
+            Graphics g = Graphics.FromImage(mapImage);
+            switch (tileType)
+            {
+                case TILETYPE.BBOX:
+                    g.DrawImage(bmBbox, p);
+                    break;
+                case TILETYPE.CHARA:
+                    g.DrawImage(bmChara, p);
+                    break;
+
+                case TILETYPE.FLOOR:
+                    g.DrawImage(bmFloor, p);
+                    break;
+                case TILETYPE.GOAL:
+                    g.DrawImage(bmGoal, p);
+                    break;
+                case TILETYPE.GRASS:
+                    g.DrawImage(bmGrass, p);
+                    break;
+                case TILETYPE.WALL:
+                    g.DrawImage(bmWall, p);
+                    break;
+            }
+            g.Dispose();
+            mapDisplay.Image = mapImage; 
+        }
+
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            tileType = TILETYPE.WALL;
+            tileType = TILETYPE.GRASS;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -123,6 +132,25 @@ namespace WindowsFormsApplication1
         {
             tileType = TILETYPE.CHARA;
         }
-    
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            tileType = TILETYPE.WALL;
+        }
+
+        private void mapDisplay_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.X <= 0 || e.X >= mapDisplay.Width || e.Y <= 0 || e.Y >= mapDisplay.Height) return;
+            if (isMouseDown)
+            {
+                drawTileImage(e);
+            }
+        }
+
+        private void mapDisplay_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMouseDown = false;
+        }
+
     }
 }
