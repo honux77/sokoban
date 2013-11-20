@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WindowsFormsApplication1
 {
@@ -37,6 +38,27 @@ namespace WindowsFormsApplication1
                     map[y, x] = TILETYPE.FLOOR;
             mapImage = new Bitmap(mapw * TSIZE, maph * TSIZE);
             mapReset();
+
+            //for test
+            
+            LevelData l = new LevelData(5, 4, 1);
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 4; j++)
+                    l.ta[i, j] = TILETYPE.GOAL;
+            LevelData.mapList.Add(l);
+            LevelData.save();
+             
+            LevelData.load();
+            l = LevelData.mapList.ElementAt(0);
+            Debug.WriteLine(l.w);
+            Debug.WriteLine(l.h);
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 4; j++)
+                    Debug.WriteLine(l.ta[i,j]);
+            
+
+
+
         }
 
         void mapReset()
