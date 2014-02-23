@@ -5,16 +5,32 @@ by Hobytes
 (2013.10: some bug fix)
 ************************************/
 #include "sokoban.h"
-#include "map.h"
 #include <Windows.h>
-//start data;
-int px, py,turn;
 
+int main() {
+	using namespace glib;
+	Framework::init(40,20);
+	Framework* f = Framework::instance();
+	Array2<char> *disp = f->getDisplay();
+	int w = disp->getWidth();
+	int h = disp->getHeight();
+	for (int i =0; i < h; i ++)
+		for (int j = 0; j < w; j ++)
+			(*disp)(i,j) = '*';
+	f->draw();
+}
+
+//start data;
+//int px, py,turn;
+
+/*
 int main() {
 	char filename[20];
 	using namespace std; 	
-	int key, left, stage;			
-	MapData md;	
+	using namespace glib;
+	Framework f(20,20);
+			
+	
 	//bool exist;
 	cout << "Simple Push Push Game by Hobytes ver. 0.3" << endl;
 	cout << "Press space bar to start..." << endl;	
@@ -128,3 +144,4 @@ void updateGame(int key, MapData& md) {
 	px = tx, py = ty;
 }
 
+*/

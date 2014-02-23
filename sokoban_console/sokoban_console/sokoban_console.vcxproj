@@ -75,10 +75,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
+    <ClCompile Include="sokoban.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="map.h" />
     <ClInclude Include="sokoban.h" />
   </ItemGroup>
   <ItemGroup>
