@@ -1,10 +1,51 @@
-#include <Windows.h>
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include "sokoban.h"
+#include <list>
 
 namespace glib {	
-	Framework* Framework::mInstance=NULL;
+
+
+	//global instance
+	Framework* Framework::mInstance=NULL;	
+	int seq = 0;
+
+	void Scene::fillScene(char c) {
+		Array2 <char> *vram = this->getVRAM();
+		for (int i = 0; i < vram->getSize(); i++) {
+			(*vram)(i) = c;
+		}
+	}
+	void setScene(Scene *src, const char* dst, int y, int x) {
+		Array2<char> *vram = src->getVRAM();
+		int idx = 0;
+		while (dst[idx] != '\0') {
+			(*vram)(y, x + idx) = dst[idx];
+			idx++;
+		}
+	}
+
+	// depth comparison for Scene
+	bool compScene(const Scene &s1, const Scene &s2)
+	{
+		return s1.getDepth() < s2.getDepth();
+	}
+
+	//Scene Initializer 
+	Scene::Scene(int rowPos, int colPos, int width, int height, int depth) :
+		mWidth(width), mHeight(height), mRow(rowPos), mCol(colPos), mDepth(depth), mShow(true) {
+		mArray = new Array2 <char>(width, height);
+		mID = ++seq;		
+	}
+	
+	Scene::Scene(int rowPos, int colPos, int width, int height, int depth, char c) :
+		mWidth(width), mHeight(height), mRow(rowPos), mCol(colPos), mDepth(depth), mShow(true) {
+		mArray = new Array2 <char>(width, height);
+		mID = ++seq;
+		fillScene(c);
+	}
+
 	void Framework::init(int w, int h)	
 	{		
 		if(mInstance != NULL)
@@ -12,23 +53,67 @@ namespace glib {
 		mInstance = new Framework();
 		mInstance->mWidth = w;
 		mInstance->mHeight = h;
-		mInstance->display = new Array2<char> (mInstance->mWidth, mInstance->mHeight);
+		mInstance->display = new Array2<char> (mInstance->mWidth, mInstance->mHeight);	
+	}
+
+	Scene *Framework::createScene(int rowPos, int colPos, int width, int height, int depth) {
+		SceneList.push_front(Scene(rowPos, colPos,width, height, depth));
+		return  &*SceneList.begin();		
+		
+	};
+	//for debug
+	Scene* Framework::createScene(int rowPos, int colPos, int width, int height, int depth, char c) {
+		SceneList.push_front(Scene(rowPos, colPos, width, height, depth, c));
+		return &*SceneList.begin();
+	};
+
+	Scene* Framework::findScene(int id)
+	{		
+		std::list <Scene>::iterator itor;
+		
+		for (itor = SceneList.begin() ; itor != SceneList.end(); itor++) {				
+			if (itor->getID() == id)
+				return &*itor;			
+		}
+		//can't find
+		return NULL;
+	};
+	
+	void Framework::drawScene(const Scene& s) {
+		int r = s.rowPos();
+		int w = s.colPos();
+		Array2 <char> *vram = s.getVRAM();
+		for (int i = 0; i < s.getHeight(); i ++)
+		for (int j = 0; j < s.getWidth(); j++)
+			(*display)(r + i, w + j) = (*vram)(i, j);
 	}
 
 	void Framework::draw() {
 		system("cls");
-		for(int i = 0; i < mHeight; i ++) {
-			for(int j = 0; j < mWidth; j++)
-				std::cout << (*display)(i,j);
-		std::cout<<std::endl;
+		SceneList.sort(compScene);
+		std::list <Scene>::iterator itor;
+		//fill background
+		//setString(display, MAINSCREEN,0,0);
+		
+		//copy each scene to display
+		for (itor = SceneList.begin(); itor != SceneList.end(); itor++) 
+			if (itor->isShow())
+				drawScene(*itor);
+		
+		char* buf = new char[mWidth+1];		
+		
+		int i, j;
+		for(i = 0; i < mHeight; i ++) {
+			for (j = 0; j < mWidth; j++) {
+				buf[j] = (*display)(i, j);
+			}
+			buf[j] = '\0';
+			std::cout<<buf << '\n';
 		}
-	}
-	
-	
+		delete[] buf;
+	}	
 		int getInput();
-		void updateGame();
-		
-		
+		void updateGame();		
 	
 	bool StageData::readMap(const char * mapfile) {
 		std::ifstream maptext(mapfile, std::ifstream::binary);
