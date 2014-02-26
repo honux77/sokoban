@@ -12,31 +12,31 @@
 #define KEY_RESET 114
 
 #define MAINSCREEN \
-	"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式成式式式式式式式忖"\
-	"弛                                                          弛SCORE   00000 弛"\
-	"戍式式式式式式式式式式式式式式式式式式式式式式式式式式式式式扣LEFT    00000 弛"\
-	"弛                                                          弛TURN    00000 弛"\
-	"弛                                                          戍式式式式式式式扣"\
-	"弛                                                          弛WASD: MOVE    弛"\
-	"弛                                                          弛ESC : RESET   弛"\
-	"弛                                                          弛Q   : QUIT    弛"\
-	"弛                                                          弛L   : LOAD    弛"\
-	"弛                                                          弛S   : SAVE    弛"\
-	"弛                                                          戍式式式式式式式扣"\
-	"弛                                                          弛              弛"\
-	"弛                                                          弛              弛"\
-	"弛                                                          弛              弛"\
-	"弛                                                          弛              弛"\
-	"弛                                                          弛WHAT DO YOU   弛"\
-	"弛                                                          弛WANT?         弛"\
-	"弛                                                          弛              弛"\
-	"弛                                                          弛>             弛"\
-	"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式扛式式式式式式式旭"
+	"+-----------------------------------------------------------------------------+\n"\
+	"|                                                           | SCOR      00000 |\n"\
+	"+-----------------------------------------------------------+ LEFT      00000 |\n"\
+	"|                                                           | TURN      00000 |\n"\
+	"|                                                           +-----------------+\n"\
+	"|                                                           | WASD : MOVE     |\n"\
+	"|                                                           | ESC  : RESET    |\n"\
+	"|                                                           | Q    : QUIT     |\n"\
+	"|                                                           | L    : LOAD     |\n"\
+	"|                                                           | S    : SAVE     |\n"\
+	"|                                                           +-----------------+\n"\
+	"|                                                           |                 |\n"\
+	"|                                                           |                 |\n"\
+	"|                                                           |                 |\n"\
+	"|                                                           |                 |\n"\
+	"|                                                           |WHAT DO YOU WANT?|\n"\
+	"|                                                           |                 |\n"\
+	"|                                                           |> _              |\n"\
+	"|                                                           |                 |\n"\
+	"+----------------------------------------------------------扛-----------------+\n"
 
 #define RESET \
-	"忙式式式式式式式式式式式式式式式式式式忖"\
-	"弛 DO YOU REALLY WANT TO RESET (Y/n)? 弛"\
-	"戌式式式式式式式式式式式式式式式式式式旭"
+	"+--------------------------------------+"\
+	"|  DO YOU REALLY WANT TO RESET (Y/n)?  |"\
+	"+--------------------------------------+"
 
 namespace glib {
 	//for map data
@@ -73,8 +73,7 @@ namespace glib {
 
 	class Scene {
 		friend class Framework;
-	public:
-		bool changeDepth(int id, int new_depth);
+	public:		
 		Array2<char> *getVRAM() const { return mArray; }
 		int getWidth() const { return mWidth; }
 		int getHeight() const { return mHeight; }
@@ -82,18 +81,22 @@ namespace glib {
 		int getDepth() const { return mDepth; }
 		int rowPos() const { return mRow; }
 		int colPos() const { return mCol; }
+		void moveScene(int delta_row, int delta_col, int delta_depth) {
+			mRow += delta_row;
+			mCol += delta_col;
+			mDepth += delta_depth;
+		}
 		void fillScene(char c);
 		bool isShow() { return mShow; }
 		void Show() { mShow = true; }
 		void Hide() { mShow = false; }
 
 	private:
-		//private constructor 
-		Scene(int rowPos, int colPos, int width, int height, int depth);
+		//private constructor 		
 		Scene(int rowPos, int colPos, int width, int height, int depth, char c);
 		Array2<char>* mArray;
-		const int mWidth, mHeight, mRow, mCol, mDepth;
-		int mID;
+		const int mWidth, mHeight;
+		int mID, mRow, mCol, mDepth;
 		bool mShow;
 	};
 	void setScene(Scene *src, const char* dst, int y, int x);

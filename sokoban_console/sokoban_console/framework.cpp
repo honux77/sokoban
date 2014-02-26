@@ -30,14 +30,7 @@ namespace glib {
 	bool compScene(const Scene &s1, const Scene &s2)
 	{
 		return s1.getDepth() < s2.getDepth();
-	}
-
-	//Scene Initializer 
-	Scene::Scene(int rowPos, int colPos, int width, int height, int depth) :
-		mWidth(width), mHeight(height), mRow(rowPos), mCol(colPos), mDepth(depth), mShow(true) {
-		mArray = new Array2 <char>(width, height);
-		mID = ++seq;		
-	}
+	}	
 	
 	Scene::Scene(int rowPos, int colPos, int width, int height, int depth, char c) :
 		mWidth(width), mHeight(height), mRow(rowPos), mCol(colPos), mDepth(depth), mShow(true) {
@@ -57,7 +50,7 @@ namespace glib {
 	}
 
 	Scene *Framework::createScene(int rowPos, int colPos, int width, int height, int depth) {
-		SceneList.push_front(Scene(rowPos, colPos,width, height, depth));
+		SceneList.push_front(Scene(rowPos, colPos,width, height, depth, ' '));
 		return  &*SceneList.begin();		
 		
 	};
@@ -100,16 +93,14 @@ namespace glib {
 			if (itor->isShow())
 				drawScene(*itor);
 		
-		char* buf = new char[mWidth+1];		
+		int len = display->getSize();
+		char* buf = new char[len];		
 		
-		int i, j;
-		for(i = 0; i < mHeight; i ++) {
-			for (j = 0; j < mWidth; j++) {
-				buf[j] = (*display)(i, j);
-			}
-			buf[j] = '\0';
-			std::cout<<buf << '\n';
-		}
+		for (int i = 0; i < len; i++) 			
+			buf[i] = (*display)(i);
+			
+		fwrite(buf, len, 1, stdout);
+		fflush(stdout);
 		delete[] buf;
 	}	
 		int getInput();

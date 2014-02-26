@@ -11,29 +11,47 @@ by Hobytes
 #define HEIGHT 20
 
 int main() {
+	system("pause");
 	using namespace glib;
-	Framework::init(78, 20);
+	Framework::init(80, 20);
 	Framework* f = Framework::instance();
-	Scene *bg = f->createScene(0, 0, 78, 20, 1);
+	Scene *bg = f->createScene(0, 0, 80, 20, 1);
 	Scene *stage = f->createScene(1, 30, 10, 1, 2);
-	Scene *reset = f->createScene(5, 6, 40, 3, 3);
-	Scene *map = f->createScene(5, 10, 20, 10, 3, '#');
+	Scene *reset = f->createScene(5, 6, 40, 3, 15);
+	Scene *map = f->createScene(5, 10, 20, 10, 10, '#');
+	Scene *hello = f->createScene(15,5, 20, 1, 15);
 
 	setScene(bg, MAINSCREEN, 0, 0);
 	setScene(stage, "STAGE 10", 0, 0);
 	setScene(reset, RESET, 0, 0);
+	setScene(hello, "Hello, SM9", 0, 0);
+	hello->Hide();
+	
+	f->draw();
+	Sleep(1000);
 
-	char buf[10];
-	for (int i = 0; i < 99; i++) {
-		sprintf_s(buf, "STAGE %2d", i);
-		setScene(stage, buf, 0, 0);
-		
-		if (i % 10 == 0 || i%10 == 1 || i%10 == 2)
-			reset->Hide();
-		else
-			reset->Show();
+	reset->Hide();
+	f->draw();	
+	Sleep(1000);
+
+	reset->Show();
+	f->draw();
+	Sleep(1000);
+	reset->moveScene(0, 0, -10);
+	f->draw();
+	Sleep(1000);
+	reset->moveScene(0, 0, +10);
+	f->draw();
+	Sleep(1000);
+	
+	reset->Hide();
+	hello->Show();
+	f->draw();
+	Sleep(1000);
+	for (int i = 0; i < 5; i++) {
+		hello->moveScene(0, 5, 0);
 		f->draw();
-		Sleep(100);
+		Sleep(1000);
 	}
 }
 
