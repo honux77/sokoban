@@ -20,11 +20,11 @@ namespace glib {
 			(*vram)(i) = c;
 		}
 	}
-	void setScene(Scene *src, const char* dst, int y, int x) {
-		Array2<char> *vram = src->getVRAM();
+	void Scene::set(const char  *str, int y, int x) {
+		Array2<char> *vram = getVRAM();
 		int idx = 0;
-		while (dst[idx] != '\0') {
-			(*vram)(y, x + idx) = dst[idx];
+		while (str[idx] != '\0') {
+			(*vram)(y, x + idx) = str[idx];
 			idx++;
 		}
 	}
@@ -35,11 +35,12 @@ namespace glib {
 		return s1.getDepth() < s2.getDepth();
 	}	
 	
-	Scene::Scene(int rowPos, int colPos, int width, int height, int depth, char c) :
+	Scene::Scene(const char * name, int rowPos, int colPos, int width, int height, int depth, char c) :
 		mWidth(width), mHeight(height), mRow(rowPos), mCol(colPos), mDepth(depth), mShow(true) {
 		mArray = new Array2 <char>(width, height);
 		mID = ++seq;
 		fillScene(c);
+		strcpy_s(mName, name);
 	}	
 
 	void Framework::init(int w, int h)	
@@ -51,26 +52,26 @@ namespace glib {
 		mInstance->mHeight = h;
 		mInstance->display = new Array2<char> (mInstance->mWidth, mInstance->mHeight);	
 		mInstance->delay = DELAY;
-		mInstance->fpsScene = mInstance->createScene(1, 1, 9, 1, 100);
+		mInstance->fpsScene = mInstance->createScene("fps",1, 1, 9, 1, 100);
 	}
 
-	Scene *Framework::createScene(int rowPos, int colPos, int width, int height, int depth) {
-		SceneList.push_front(Scene(rowPos, colPos,width, height, depth, ' '));
-		return  &*SceneList.begin();		
+	Scene *Framework::createScene(const char* name, int rowPos, int colPos, int width, int height, int depth) {
+		mSceneList.push_front(Scene(name, rowPos, colPos,width, height, depth, ' '));
+		return  &*mSceneList.begin();		
 		
 	};
 	//for debug
-	Scene* Framework::createScene(int rowPos, int colPos, int width, int height, int depth, char c) {
-		SceneList.push_front(Scene(rowPos, colPos, width, height, depth, c));
-		return &*SceneList.begin();
+	Scene* Framework::createScene(const char* name, int rowPos, int colPos, int width, int height, int depth, char c) {
+		mSceneList.push_front(Scene(name, rowPos, colPos, width, height, depth, c));
+		return &*mSceneList.begin();
 	};
 
-	Scene* Framework::findScene(int id)
+	Scene* Framework::findScene(const char* name)
 	{		
 		std::list <Scene>::iterator itor;
 		
-		for (itor = SceneList.begin() ; itor != SceneList.end(); itor++) {				
-			if (itor->getID() == id)
+		for (itor = mSceneList.begin() ; itor != mSceneList.end(); itor++) {				
+			if(strcmp(itor->Name(),name) == 0)
 				return &*itor;			
 		}
 		//can't find
@@ -92,11 +93,11 @@ namespace glib {
 		double dfps;
 		start = clock();
 		system("cls");
-		SceneList.sort(compScene);
+		mSceneList.sort(compScene);
 		std::list <Scene>::iterator itor;
 
 		//copy each scene to display
-		for (itor = SceneList.begin(); itor != SceneList.end(); itor++) 
+		for (itor = mSceneList.begin(); itor !=mSceneList.end(); itor++) 
 			if (itor->isShow())
 				drawScene(*itor);
 		
@@ -111,20 +112,26 @@ namespace glib {
 		Sleep(delay);
 		end = clock() - start;
 		dfps = 1000.0 / end;
-		sprintf(str, "fps:%4.2f", dfps);
-		setScene(fpsScene, str, 0, 0);
+		sprintf_s(str, "fps:%4.2f", dfps);
+		fpsScene->set(str, 0, 0);
 		delete[] buf;
 	}	
-		int getInput();
-		void updateGame();		
-	
-	bool StageData::readMap(const char * mapfile) {
-		std::ifstream maptext(mapfile, std::ifstream::binary);
-		if(!maptext.good())
-			return false;
-		maptext >> std::dec >> mWidth;
-		maptext >> std::dec >> mHeight;
-		return true;
+	int Framework::getInput() {
+		int ret;
+		std::list <int>::iterator i;
+		for (i = mKeyList.begin(); i != mKeyList.end(); i++) {
+			//if ((ret = GetAsyncKeyState(*i) )& 0x8000)
+			if ((ret = GetAsyncKeyState(*i)) & 0x8000)
+				return *i;
+		}
+		//can't find
+		return -1;
 	}
+	void Framework::addKey(int key) {
+		mKeyList.push_back(key);			
+	}
+
+		void updateGame();		
 };
+
 

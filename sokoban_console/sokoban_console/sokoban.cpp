@@ -1,119 +1,111 @@
+#include <iostream>
+#include <fstream>
+#include "sokoban.h"
+#include "framework.h"
+
 /*
-void MapData::initMap()
-{
-int i;
-map = new MTYPE*[h];
-map_bak = new MTYPE*[h];
-for(i = 0; i < h; i++) {
-map[i] = new MTYPE[w];
-map_bak[i] = new MTYPE[w];
-}
-}
-bool MapData::readMapFromText(const char *text, int &px, int& py)
-{
-unsigned int magic;
-int i, j;
-char c;
-
-
-maptext >> std::hex >> magic;
-assert(magic == MAGIC);
-maptext >> std::dec >> w;
-maptext >> std::dec >> h;
-initMap();
-for (i = 0; i < h;  i++) {
-for( j = 0; j < w; j++) {
-maptext >> c;
-switch(c) {
-case '#':
-map[i][j] = WALL;
-break;
-case 'O':
-map[i][j] = BALL;
-break;
-case 'P':
-map[i][j] = PLAYER;
-px = ox =j;
-py = oy =i;
-break;
-case 'X':
-map[i][j] = EXIT;
-break;
-case '-':
-map[i][j] = SPACE;
-break;
-default:
-map[i][j] = SPACE;
-}
-}
-}
-copyMap(map_bak,map);
-turn = 1;
-maptext.close();
-return true;
-}
-void MapData::printMap() {
-int x, y;
-left = 0;
-for (y = 0; y < h; y++) {
-for( x = 0; x < w; x++) {
-switch (map[y][x]) {
-case WALL:
-std::cout << "#";
-break;
-case PLAYER:
-std::cout << "P";
-break;
-case PL_ON_EX:
-std::cout << "p";
-break;
-case BALL:
-left++;
-std::cout << "O";
-break;
-case BL_ON_EX:
-std::cout << "o";
-break;
-case EXIT:
-std::cout << "X";
-break;
-case SPACE:
-std::cout << " ";
-break;
-}
-}
-std::cout << std::endl;
-}
-}
-void MapData::freeMap() {
-
-int i;
-for(i = 0; i < h; i++) {
-delete[] map[i];
-map[i] = 0;
-delete[] map_bak[i];
-map_bak[i] = 0;
-}
-delete[] map;
-delete[] map_bak;
-map = 0;
-map_bak =0;
-}
-
-void MapData::copyMap(MTYPE **dst, MTYPE **src) {
-int i, j;
-for (i = 0; i < h; i++)
-for (j = 0; j < w; j++)
-dst[i][j] = src[i][j];
-
-}
-
-void MapData::resetMap(int &x, int &y) {
-copyMap(map, map_bak);
-turn = 1;
-x = ox;
-y = oy;
-}
-
-int MapData::leftBall() { return left; }
+class Sokoban {
+public:
+Sokoban();
+void readMap(int stage);
+void Load();
+void Save();
+private:
+Record *record;
+MTYPE *mStartMap;
+MTYPE *mCurrentMap;
+};
 */
+Sokoban::Sokoban() {
+	readMap(1);
+	stage = 1;
+
+}
+glib::Array2<char> *Sokoban::Video() {
+	return mCurrentMap;
+}
+
+void Sokoban::readMap(int stage) {
+	char fname[16];
+	char c;
+	sprintf_s(fname, "%s%d%s", PREFIX, stage, EXT);
+
+	left = 0;
+	std::ifstream maptext(fname, std::ifstream::binary);
+	maptext >> std::dec >> mapw;
+	maptext >> std::dec >> maph;
+	mStartMap = new glib::Array2 <char>(mapw, maph);
+	mCurrentMap = glib::Framework::instance()->findScene("map")->getVRAM();
+	for (int i = 0; i < mapw; i++)
+	for (int j = 0; j < maph; j++)
+	{
+		maptext >> c;
+		switch (c) {
+		case '#': (*mStartMap)(i,j) = WALL; break;
+		case 'O': (*mStartMap)(i,j) = BALL; left++;  break;
+		case 'P': (*mStartMap)(i, j) = PLAYER; px = opx = j; py = opy = i;  break;
+		case '-': (*mStartMap)(i,j) = SPACE; break;
+		case 'X': (*mStartMap)(i,j) = EXIT; break;
+		}
+	}
+	copyMap(mStartMap, mCurrentMap, mapw, maph);
+
+}
+
+void Sokoban::copyMap(glib::Array2 <char> *src, glib::Array2 <char> *dst, int w, int h) {
+	for (int i = 0; i < w; i++)
+	for (int j = 0; j < h; j++)
+		(*dst)(i, j) = (*src)(i, j);
+}
+
+void Sokoban::resetMap() {
+	copyMap(mStartMap, mCurrentMap, mapw, maph);
+	px = opx;
+	py = opy;
+}
+
+void Sokoban::updateMap(int dx, int dy) {
+	int bx, by;
+	int fx = px + dx;
+	int fy = py + dy;
+	switch ((*mCurrentMap)(fy, fx)) {
+	case WALL:
+		return;
+	case SPACE:		
+	case EXIT:				
+		break;
+	case BALL:
+		bx = px + 2 * dx;
+		by = py + 2 * dy;
+		if ((*mCurrentMap)(by, bx) == SPACE) {
+			(*mCurrentMap)(by, bx) = BALL;
+			(*mCurrentMap)(fy, fx) = SPACE;
+		} else if ((*mCurrentMap)(by, bx) == EXIT) {
+			(*mCurrentMap)(by, bx) = BL_ON_EX;
+			(*mCurrentMap)(fy, fx) = SPACE;
+		} else
+			return;
+		break;
+	case BL_ON_EX:
+		bx = px + 2 * dx;
+		by = py + 2 * dy;
+		if ((*mCurrentMap)(by, bx) == SPACE) {
+			(*mCurrentMap)(by, bx) = BALL;
+			(*mCurrentMap)(fy, fx) = EXIT;			
+		} else if ((*mCurrentMap)(by, bx) == EXIT) {
+			(*mCurrentMap)(by, bx) = BL_ON_EX;
+			(*mCurrentMap)(fy, fx) = EXIT;
+			break;
+		} else
+			return;
+		break;
+	default:
+		return;
+	}
+	//move player
+	(*mCurrentMap)(py, px) == PLAYER ? (*mCurrentMap)(py, px) = SPACE : (*mCurrentMap)(py, px) = EXIT;
+	px = fx;
+	py = fy;
+	(*mCurrentMap)(py, px) == EXIT ? (*mCurrentMap)(py, px) = PL_ON_EX : (*mCurrentMap)(py, px) = PLAYER;
+
+}

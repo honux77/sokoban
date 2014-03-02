@@ -15,9 +15,7 @@
 //dfault delay
 #define DELAY 100
 
-namespace glib {
-	//for map data
-	enum MTYPE{ SPACE, WALL, PLAYER, BALL, EXIT, PL_ON_EX, BL_ON_EX };
+namespace glib {	
 
 	//for dynamic 2d array
 	template <typename T> class Array2 {
@@ -30,6 +28,8 @@ namespace glib {
 			delete[] mArr;
 			mArr = 0;
 		}
+		int Y(int i) { return i / mWidth; }
+		int X(int i) { return i % mWidth; }
 		int getWidth() { return mWidth; }
 		int getHeight() { return mHeight; }
 		int getSize() { return mWidth * mHeight; }
@@ -52,6 +52,7 @@ namespace glib {
 		friend class Framework;
 	public:		
 		Array2<char> *getVRAM() const { return mArray; }
+		Array2<char> *getVRAM() { return mArray; }
 		int getWidth() const { return mWidth; }
 		int getHeight() const { return mHeight; }
 		int getID() { return mID; };
@@ -63,20 +64,24 @@ namespace glib {
 			mCol += delta_col;
 			mDepth += delta_depth;
 		}
+		const char* Name() { return mName; }
 		void fillScene(char c);
+		void set(const char *str, int y, int x);
 		bool isShow() { return mShow; }
 		void Show() { mShow = true; }
 		void Hide() { mShow = false; }
 
+
 	private:
 		//private constructor 		
-		Scene(int rowPos, int colPos, int width, int height, int depth, char c);
+		Scene(const char *name, int rowPos, int colPos, int width, int height, int depth, char c);
 		Array2<char>* mArray;
 		const int mWidth, mHeight;
 		int mID, mRow, mCol, mDepth;
 		bool mShow;
+		char mName[16];
 	};
-	void setScene(Scene *src, const char* dst, int y, int x);
+	
 
 
 	class Framework {
@@ -86,35 +91,22 @@ namespace glib {
 		static Framework* instance() { return mInstance; }
 		int getInput();
 		void updateGame();
-		Scene *createScene(int rowPos, int colPos, int width, int height, int depth);
+		Scene *createScene(const char* name, int rowPos, int colPos, int width, int height, int depth);
 		//for debug
-		Scene *createScene(int rowPos, int colPos, int width, int height, int depth, char c);
-		Scene* findScene(int id);
+		Scene *createScene(const char* name, int rowPos, int colPos, int width, int height, int depth, char c);
+		Scene* findScene(const char *name);
+		void updateGame(int key);
 		void draw();
 		int delay;
-
+		void addKey(int listenkey);
 	private:
 		static Framework* mInstance;
 		Array2<char> *display;
 		Scene *fpsScene;
 		int mWidth;
 		int mHeight;
-		std::list <Scene> SceneList;
+		std::list <Scene> mSceneList;
+		std::list <int> mKeyList;
 		void drawScene(const Scene& s);
-	};
-
-	class StageData {
-	public:
-		bool readMap(const char* mapfile);
-		int getLeft();
-		int getTurn();
-		void getMap(Array2<MTYPE> *map, int *width, int* height);
-
-	private:
-		int mLeft;
-		int mTurn;
-		int mPos; //player position
-		int mWidth, mHeight; //map width & height
-		Array2 <MTYPE> mMap;
-	};
+	};	
 };

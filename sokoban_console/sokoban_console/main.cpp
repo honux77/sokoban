@@ -9,6 +9,9 @@ by Hobytes
 #include "sokoban.h"
 #include <time.h>
 
+
+//it does not need anymore
+/*
 HWND GetConsoleHwnd(void)
 {
 	HWND hwndFound;         
@@ -30,62 +33,145 @@ HWND GetConsoleHwnd(void)
 
 	return(hwndFound);
 }
+*/
+
+#define TIME_START(a) a=clock()
+#define TIME_END(b,a) b = (clock() - a)/1000
+#define CONVERT(T, S, M, H) do {\
+	S = T % 60; \
+	M = (T / 60) % 60; \
+	H = (T / 60 / 60); } while (0);
+
+//global variables
+long start, end;
+int dx, dy;
 
 
 int main() {	
-	long start, end;
-	int ss, mm, hh;
-	char timestr[16];
-	using namespace glib;
+	using namespace glib;	
+	
 	Framework::init(WIDTH, HEIGHT);
 	Framework* f = Framework::instance();
-	//background
-	Scene *bg = f->createScene(0, 0, WIDTH, HEIGHT, 1);
-	// for stage display
-	Scene *stage = f->createScene(1, 30, 10, 1, 2);
-	// reset menu
-	Scene *menu = f->createScene(10, 5, 40, 3, 15);	
-	// map
-	Scene *map = f->createScene(5, 10, 20, 10, 10, '#');	
-	//time  TIME   00:00:00
-	Scene *time = f->createScene(4, 62, 15, 1, 15);
-	//cmd
-	Scene *cmd = f->createScene(20, 63, 1, 1, 15, '@');
+	//set delay, defalut is 100;
+	//f->delay=50;
+	
+	//set scene
+	Scene *bg = f->createScene("bg",0, 0, WIDTH, HEIGHT, 1);	
+	Scene *stage = f->createScene("stage",1, 30, 10, 1, 2);	
+	Scene *menu = f->createScene("menu",10, 5, 40, 3, 15);
+	menu->Hide();	
+	Scene *map = f->createScene("map",5, 20, 20, 10, 10);		
+	Scene *time = f->createScene("time",4, 62, 15, 1, 15);	
+	Scene *cmd = f->createScene("cmd",20, 63, 1, 1, 15);
+	Scene *score = f->createScene("score", 2, 62, 15, 1, 15);
 
 	//draw scene
-	setScene(bg, MAINSCREEN, 0, 0);
-	setScene(stage, "STAGE 1", 0, 0);
-	setScene(menu, RESET, 0, 0);	
-	setScene(time, "TIME   00:00:00", 0, 0);
+	bg->set(MAINSCREEN, 0, 0);
+	stage->set("STAGE 1", 0, 0);
+	menu->set(RESET, 0, 0);		
 
-	HWND cwnd = GetConsoleHwnd();
+	//HWND cwnd = GetConsoleHwnd();
+	//add key
+	f->addKey('W');
+	f->addKey('A');
+	f->addKey('S');
+	f->addKey('D');	
+	f->addKey('R');
+	f->addKey('V');
+	f->addKey('L');
+	f->addKey('Q');
+	f->addKey('Y');
+	f->addKey('N');
 
-	
-	start = clock();
+	TIME_START(start);
 	while (1) {
-		end = (clock()  -  start) /1000;
-		ss = end % 60;
-		mm = (end / 60) % 60;
-		hh = (end / 60 / 60);
-		sprintf_s(timestr, "TIME   %02d:%02d:%02d", hh, mm, ss);
-		setScene(time, timestr, 0, 0);
-
-		f->draw();
-		if (GetAsyncKeyState('W'))
-			setScene(cmd, "W", 0, 0);
-		else if (GetAsyncKeyState('A'))
-			setScene(cmd, "A", 0, 0);
-		else if (GetAsyncKeyState('S'))
-			setScene(cmd, "S", 0, 0);
-		else if (GetAsyncKeyState('D'))
-			setScene(cmd, "D", 0, 0);
-
-	}
-	
-	//system("pause");
+		int key = f->getInput();		
+		//must implement
+		f->updateGame(key);
+		f->draw();	
+	}	
 }
 
 
+void glib::Framework::updateGame(int key) {	
+	static Sokoban soko;
+	char timestr[16];	
+	int ss, mm, hh;
+	TIME_END(end, start);
+	CONVERT(end, ss, mm, hh);	
+	sprintf_s(timestr, "TIME   %02d:%02d:%02d", hh, mm, ss);	
+
+	enum MENUFLAG {NONE=0X0, RFLAG=0x1, QFLAG=0x2, SFLAG=0x4, LFLAG=0x8};
+	static MENUFLAG mflag;
+	static Scene *cmd = findScene("cmd");
+	static Scene *menu = findScene("menu");
+	static Scene *time = findScene("time");
+	static Scene *map = findScene("map"); 	
+	
+	time->set(timestr, 0, 0);
+
+	char keystr[2];
+	if (cmd == NULL) {
+		printf("UPDATE GAME ERROR");
+		return;
+	}
+	if (key > 0 && !(mflag)) {
+		keystr[0] = key;
+		keystr[1] = '\0';
+		cmd->set(keystr, 0, 0);
+	}
+		
+	switch (key) {
+	case 'W': dx = 0; dy = -1; break;
+	case 'A':dx = -1; dy = 0; break;
+	case 'S':dx = 0; dy = 1; break;
+	case 'D':  dx = 1; dy = 0; break;
+	case 'R':
+		mflag = RFLAG;		
+		menu->set(RESET, 0, 0);		
+		menu->Show();
+		break;
+	case 'Q':
+		mflag = QFLAG;
+		menu->set(QUIT, 0, 0);
+		menu->Show();		
+		break;
+	case 'L':
+		mflag = LFLAG;
+		menu->set(LOAD, 0, 0);
+		menu->Show();
+		break;
+	case 'V':
+		mflag = SFLAG;
+		menu->set(SAVE, 0, 0);
+		menu->Show();
+		break;
+	case 'Y':
+		switch (mflag) {
+		case QFLAG:
+			system("cls");
+			std::cout << "THANK YOU FOR PLAYING.." << std::endl;
+			exit(0);
+			break;
+		case RFLAG:
+			soko.resetMap();
+			menu->Hide();
+			mflag = NONE;
+			break;
+		}
+	case 'N':
+		menu->Hide();
+		mflag = NONE;
+		break;
+	default:
+		dx = dy = 0;
+	}
+
+	//update map
+	soko.updateMap(dx, dy);
+	dx = dy = 0;
+
+}
 /*
 
 	turn = 1;
