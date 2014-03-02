@@ -3,6 +3,7 @@
 #include <fstream>
 #include <list>
 #include <Windows.h>
+#include <ctime>
 #include "framework.h"
 
 
@@ -39,7 +40,7 @@ namespace glib {
 		mArray = new Array2 <char>(width, height);
 		mID = ++seq;
 		fillScene(c);
-	}
+	}	
 
 	void Framework::init(int w, int h)	
 	{		
@@ -50,6 +51,7 @@ namespace glib {
 		mInstance->mHeight = h;
 		mInstance->display = new Array2<char> (mInstance->mWidth, mInstance->mHeight);	
 		mInstance->delay = DELAY;
+		mInstance->fpsScene = mInstance->createScene(1, 1, 9, 1, 100);
 	}
 
 	Scene *Framework::createScene(int rowPos, int colPos, int width, int height, int depth) {
@@ -85,12 +87,14 @@ namespace glib {
 	}
 
 	void Framework::draw() {
+		char str[10];
+		long start, end;
+		double dfps;
+		start = clock();
 		system("cls");
 		SceneList.sort(compScene);
 		std::list <Scene>::iterator itor;
-		//fill background
-		//setString(display, MAINSCREEN,0,0);
-		
+
 		//copy each scene to display
 		for (itor = SceneList.begin(); itor != SceneList.end(); itor++) 
 			if (itor->isShow())
@@ -105,6 +109,10 @@ namespace glib {
 		fwrite(buf, len, 1, stdout);
 		fflush(stdout);
 		Sleep(delay);
+		end = clock() - start;
+		dfps = 1000.0 / end;
+		sprintf(str, "fps:%4.2f", dfps);
+		setScene(fpsScene, str, 0, 0);
 		delete[] buf;
 	}	
 		int getInput();
@@ -120,122 +128,3 @@ namespace glib {
 	}
 };
 
-/*
-void MapData::initMap()
-{	
-	int i;
-	map = new MTYPE*[h];
-	map_bak = new MTYPE*[h];
-	for(i = 0; i < h; i++) {
-		map[i] = new MTYPE[w];
-		map_bak[i] = new MTYPE[w];
-	}
-}
-bool MapData::readMapFromText(const char *text, int &px, int& py)
-{
-	unsigned int magic;
-	int i, j;
-	char c;
-	
-
-	maptext >> std::hex >> magic;
-	assert(magic == MAGIC);
-	maptext >> std::dec >> w;
-	maptext >> std::dec >> h;
-	initMap();
-	for (i = 0; i < h;  i++) {		
-		for( j = 0; j < w; j++) {			
-			maptext >> c;
-			switch(c) {
-			case '#':
-				map[i][j] = WALL;
-				break;
-			case 'O':
-				map[i][j] = BALL;
-				break;
-			case 'P':
-				map[i][j] = PLAYER;
-				px = ox =j;
-				py = oy =i;
-				break;
-			case 'X':
-				map[i][j] = EXIT;
-				break;
-			case '-':
-				map[i][j] = SPACE;
-				break;
-			default:
-				map[i][j] = SPACE;				
-			}
-		}		
-	}
-	copyMap(map_bak,map);
-	turn = 1;
-	maptext.close();
-	return true;
-}
-void MapData::printMap() {
-	int x, y;
-	left = 0;
-	for (y = 0; y < h; y++) {
-		for( x = 0; x < w; x++) {
-			switch (map[y][x]) {			
-			case WALL:
-				std::cout << "#";
-				break;
-			case PLAYER:			
-				std::cout << "P";
-				break;
-			case PL_ON_EX:
-				std::cout << "p";
-				break;
-			case BALL:
-				left++;
-				std::cout << "O";
-				break;
-			case BL_ON_EX:
-				std::cout << "o";
-				break;
-			case EXIT:
-				std::cout << "X";
-				break;
-			case SPACE:
-				std::cout << " ";
-				break;
-			}
-		}
-		std::cout << std::endl;
-	}
-}
-void MapData::freeMap() {
-
-	int i;
-	for(i = 0; i < h; i++) {
-		delete[] map[i];
-		map[i] = 0;
-		delete[] map_bak[i];
-		map_bak[i] = 0;
-	}
-	delete[] map;
-	delete[] map_bak;
-	map = 0;
-	map_bak =0;
-}
-
-void MapData::copyMap(MTYPE **dst, MTYPE **src) {
-	int i, j;
-	for (i = 0; i < h; i++)
-		for (j = 0; j < w; j++)
-			dst[i][j] = src[i][j];
-		
-}
-
-void MapData::resetMap(int &x, int &y) {
-	copyMap(map, map_bak);
-	turn = 1;
-	x = ox;
-	y = oy;
-}
-
-int MapData::leftBall() { return left; }
-*/

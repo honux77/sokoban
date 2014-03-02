@@ -5,6 +5,7 @@
 	"|                                                           | SCORE     00000 |\n"\
 	"+-----------------------------------------------------------+ LEFT      00000 |\n"\
 	"|                                                           | TURN      00000 |\n"\
+	"|                                                           |                 |\n"\
 	"|                                                           +-----------------+\n"\
 	"|                                                           | WASD : MOVE     |\n"\
 	"|                                                           | ESC  : RESET    |\n"\
@@ -18,11 +19,9 @@
 	"|                                                           |                 |\n"\
 	"|                                                           |                 |\n"\
 	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
 	"|                                                           |WHAT DO YOU WANT?|\n"\
 	"|                                                           |                 |\n"\
+	"|                                                           |>                |\n"\
 	"|                                                           |> _              |\n"\
 	"|                                                           |                 |\n"\
 	"+-----------------------------------------------------------¦ª-----------------+\n"
@@ -49,10 +48,10 @@
 
 
 #define WIDTH 80
-#define HEIGHT 25
+#define HEIGHT 24
 
 
 class Sokoban {
 public:
-	readMap(const char *mapfile);
+	void readMap(const char *mapfile);
 };

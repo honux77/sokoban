@@ -9,8 +9,33 @@ by Hobytes
 #include "sokoban.h"
 #include <time.h>
 
+HWND GetConsoleHwnd(void)
+{
+	HWND hwndFound;         
+	// Fetch current window title.
+	wchar_t wtext[32];
+	LPWSTR wptr = wtext;	
+
+	wsprintf(wtext, L"Sokoban Game:%d/%d",
+		GetTickCount(),
+		GetCurrentProcessId());
+
+	SetConsoleTitle(wtext);
+
+	// Ensure window title has been updated.
+	Sleep(40);
+
+	// Look for NewWindowTitle.
+	hwndFound = FindWindow(NULL, wtext);
+
+	return(hwndFound);
+}
+
 
 int main() {	
+	long start, end;
+	int ss, mm, hh;
+	char timestr[16];
 	using namespace glib;
 	Framework::init(WIDTH, HEIGHT);
 	Framework* f = Framework::instance();
@@ -21,24 +46,40 @@ int main() {
 	// reset menu
 	Scene *menu = f->createScene(10, 5, 40, 3, 15);	
 	// map
-	Scene *map = f->createScene(5, 10, 20, 10, 10, '#');
-	// fps display
-	Scene *fps = f->createScene(3, 1, 9, 1,100);
-	char cfps[10];
+	Scene *map = f->createScene(5, 10, 20, 10, 10, '#');	
+	//time  TIME   00:00:00
+	Scene *time = f->createScene(4, 62, 15, 1, 15);
+	//cmd
+	Scene *cmd = f->createScene(20, 63, 1, 1, 15, '@');
 
+	//draw scene
 	setScene(bg, MAINSCREEN, 0, 0);
 	setScene(stage, "STAGE 1", 0, 0);
 	setScene(menu, RESET, 0, 0);	
+	setScene(time, "TIME   00:00:00", 0, 0);
+
+	HWND cwnd = GetConsoleHwnd();
+
 	
-	long start, end;
-	double dfps;
+	start = clock();
 	while (1) {
-		start = clock();
+		end = (clock()  -  start) /1000;
+		ss = end % 60;
+		mm = (end / 60) % 60;
+		hh = (end / 60 / 60);
+		sprintf_s(timestr, "TIME   %02d:%02d:%02d", hh, mm, ss);
+		setScene(time, timestr, 0, 0);
+
 		f->draw();
-		end = clock() - start;
-		dfps = 1000.0 / end;			
-		sprintf_s(cfps, "fps:%04.2f", dfps);		
-		setScene(fps, cfps, 0, 0);
+		if (GetAsyncKeyState('W'))
+			setScene(cmd, "W", 0, 0);
+		else if (GetAsyncKeyState('A'))
+			setScene(cmd, "A", 0, 0);
+		else if (GetAsyncKeyState('S'))
+			setScene(cmd, "S", 0, 0);
+		else if (GetAsyncKeyState('D'))
+			setScene(cmd, "D", 0, 0);
+
 	}
 	
 	//system("pause");

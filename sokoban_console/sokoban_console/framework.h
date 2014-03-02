@@ -96,6 +96,7 @@ namespace glib {
 	private:
 		static Framework* mInstance;
 		Array2<char> *display;
+		Scene *fpsScene;
 		int mWidth;
 		int mHeight;
 		std::list <Scene> SceneList;
