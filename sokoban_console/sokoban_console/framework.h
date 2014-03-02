@@ -11,32 +11,9 @@
 #define KEY_DOWN 80
 #define KEY_RESET 114
 
-#define MAINSCREEN \
-	"+-----------------------------------------------------------------------------+\n"\
-	"|                                                           | SCOR      00000 |\n"\
-	"+-----------------------------------------------------------+ LEFT      00000 |\n"\
-	"|                                                           | TURN      00000 |\n"\
-	"|                                                           +-----------------+\n"\
-	"|                                                           | WASD : MOVE     |\n"\
-	"|                                                           | ESC  : RESET    |\n"\
-	"|                                                           | Q    : QUIT     |\n"\
-	"|                                                           | L    : LOAD     |\n"\
-	"|                                                           | S    : SAVE     |\n"\
-	"|                                                           +-----------------+\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |WHAT DO YOU WANT?|\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |> _              |\n"\
-	"|                                                           |                 |\n"\
-	"+----------------------------------------------------------¦ª-----------------+\n"
-
-#define RESET \
-	"+--------------------------------------+"\
-	"|  DO YOU REALLY WANT TO RESET (Y/n)?  |"\
-	"+--------------------------------------+"
+#define SHOWFPS 1
+//dfault delay
+#define DELAY 100
 
 namespace glib {
 	//for map data
@@ -103,6 +80,7 @@ namespace glib {
 
 
 	class Framework {
+
 	public:
 		static void init(int w, int h);
 		static Framework* instance() { return mInstance; }
@@ -113,6 +91,7 @@ namespace glib {
 		Scene *createScene(int rowPos, int colPos, int width, int height, int depth, char c);
 		Scene* findScene(int id);
 		void draw();
+		int delay;
 
 	private:
 		static Framework* mInstance;

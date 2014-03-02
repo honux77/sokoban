@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include "sokoban.h"
 #include <list>
+#include <Windows.h>
+#include "framework.h"
+
 
 namespace glib {	
 
@@ -47,6 +49,7 @@ namespace glib {
 		mInstance->mWidth = w;
 		mInstance->mHeight = h;
 		mInstance->display = new Array2<char> (mInstance->mWidth, mInstance->mHeight);	
+		mInstance->delay = DELAY;
 	}
 
 	Scene *Framework::createScene(int rowPos, int colPos, int width, int height, int depth) {
@@ -101,6 +104,7 @@ namespace glib {
 			
 		fwrite(buf, len, 1, stdout);
 		fflush(stdout);
+		Sleep(delay);
 		delete[] buf;
 	}	
 		int getInput();

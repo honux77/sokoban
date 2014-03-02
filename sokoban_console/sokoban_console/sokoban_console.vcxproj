@@ -78,9 +78,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="framework.cpp" />
+    <ClCompile Include="sokoban.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="sokoban.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stage1.txt" />

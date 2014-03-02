@@ -4,55 +4,44 @@ by Hobytes
 1993. 8
 (2013.10: some bug fix)
 ************************************/
-#include "sokoban.h"
 #include <Windows.h>
+#include "framework.h"
+#include "sokoban.h"
+#include <time.h>
 
-#define WIDTH 78
-#define HEIGHT 20
 
-int main() {
-	system("pause");
+int main() {	
 	using namespace glib;
-	Framework::init(80, 20);
+	Framework::init(WIDTH, HEIGHT);
 	Framework* f = Framework::instance();
-	Scene *bg = f->createScene(0, 0, 80, 20, 1);
+	//background
+	Scene *bg = f->createScene(0, 0, WIDTH, HEIGHT, 1);
+	// for stage display
 	Scene *stage = f->createScene(1, 30, 10, 1, 2);
-	Scene *reset = f->createScene(5, 6, 40, 3, 15);
+	// reset menu
+	Scene *menu = f->createScene(10, 5, 40, 3, 15);	
+	// map
 	Scene *map = f->createScene(5, 10, 20, 10, 10, '#');
-	Scene *hello = f->createScene(15,5, 20, 1, 15);
+	// fps display
+	Scene *fps = f->createScene(3, 1, 9, 1,100);
+	char cfps[10];
 
 	setScene(bg, MAINSCREEN, 0, 0);
-	setScene(stage, "STAGE 10", 0, 0);
-	setScene(reset, RESET, 0, 0);
-	setScene(hello, "Hello, SM9", 0, 0);
-	hello->Hide();
+	setScene(stage, "STAGE 1", 0, 0);
+	setScene(menu, RESET, 0, 0);	
 	
-	f->draw();
-	Sleep(1000);
-
-	reset->Hide();
-	f->draw();	
-	Sleep(1000);
-
-	reset->Show();
-	f->draw();
-	Sleep(1000);
-	reset->moveScene(0, 0, -10);
-	f->draw();
-	Sleep(1000);
-	reset->moveScene(0, 0, +10);
-	f->draw();
-	Sleep(1000);
-	
-	reset->Hide();
-	hello->Show();
-	f->draw();
-	Sleep(1000);
-	for (int i = 0; i < 5; i++) {
-		hello->moveScene(0, 5, 0);
+	long start, end;
+	double dfps;
+	while (1) {
+		start = clock();
 		f->draw();
-		Sleep(1000);
+		end = clock() - start;
+		dfps = 1000.0 / end;			
+		sprintf_s(cfps, "fps:%04.2f", dfps);		
+		setScene(fps, cfps, 0, 0);
 	}
+	
+	//system("pause");
 }
 
 
