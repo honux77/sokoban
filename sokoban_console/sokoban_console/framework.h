@@ -67,6 +67,7 @@ namespace glib {
 		const char* Name() { return mName; }
 		void fillScene(char c);
 		void set(const char *str, int y, int x);
+		void set(const char *str) { set(str,0, 0); }
 		bool isShow() { return mShow; }
 		void Show() { mShow = true; }
 		void Hide() { mShow = false; }
@@ -106,7 +107,7 @@ namespace glib {
 		int mWidth;
 		int mHeight;
 		std::list <Scene> mSceneList;
-		std::list <int> mKeyList;
+		std::list <int> mKeyList;		
 		void drawScene(const Scene& s);
 	};	
 };

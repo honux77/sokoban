@@ -1,12 +1,40 @@
 #pragma once
 #include "framework.h"
+#define OPENING \
+	"+-----------------------------------------------------------------------------+\n"\
+	"|         Once upon a time in the terminal land,                              |\n"\
+	"|         There were boxes that want to go back to their positions.           |\n"\
+	"|         Let it move..                                                       |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"|                                                                             |\n"\
+	"+-----------------------------------------------------------------------------+\n"\
+	
+
 
 #define MAINSCREEN \
 	"+-----------------------------------------------------------------------------+\n"\
-	"|                                                           | RESET     00000 |\n"\
-	"+-----------------------------------------------------------+ TURN      00000 |\n"\
-	"|                                                           |                 |\n"\
-	"|                                                           |                 |\n"\
+	"|                        STAGE                              | RESET           |\n"\
+	"+-----------------------------------------------------------+ TURN            |\n"\
+	"|                                                           | LEFT            |\n"\
+	"|                                                           | SCORE           |\n"\
+	"|                                                           | TIME            |\n"\
 	"|                                                           +-----------------+\n"\
 	"|                                                           | WASD : MOVE     |\n"\
 	"|                                                           | ESC  : RESET    |\n"\
@@ -14,7 +42,6 @@
 	"|                                                           | L    : LOAD     |\n"\
 	"|                                                           | V    : SAVE     |\n"\
 	"|                                                           +-----------------+\n"\
-	"|                                                           |                 |\n"\
 	"|                                                           |                 |\n"\
 	"|                                                           |                 |\n"\
 	"|                                                           |                 |\n"\
@@ -47,9 +74,14 @@
 	"|  DO YOU REALLY WANT TO QUIT (Y/n)?   |"\
 	"+--------------------------------------+"
 
+#define CLEAR \
+	"+--------------------------------------+"\
+	"|  STAGE CLEAR!  GO TO NEXT STAGE!!    |"\
+	"+--------------------------------------+"
 
 #define WIDTH 80
 #define HEIGHT 24
+#define END 4
 
 
 //map file name
@@ -62,9 +94,7 @@
 //for map data
 enum MTYPE{ SPACE='-', WALL='#', PLAYER='P', BALL='O', EXIT='X', PL_ON_EX='p', BL_ON_EX='o' };
 
-class Sokoban {
-public:
-	long etime; //total elapsed time
+struct record {
 	int stage;
 	int mapw;
 	int maph;
@@ -72,15 +102,20 @@ public:
 	int left;
 	int reset;
 	int px, py, opx, opy; //player position
-
+	int ss, mm, hh;
+	int score;
+};
+class Sokoban {
+public:
+	record r;
 	Sokoban();
 	void readMap(int stage);
 	void Load(void);
-	void Save(void); 
-	glib::Array2<char> *Video();
+	void Save(void); 	
 	void resetMap();
 	void updateMap(int dx, int dy);
-
+	void end();
+	void clear();
 private:
 	void copyMap(glib::Array2 <char> *src, glib::Array2 <char> *dst, int w, int h);	
 	glib::Array2<char> *mCurrentMap;

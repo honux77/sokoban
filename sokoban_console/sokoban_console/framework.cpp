@@ -121,7 +121,7 @@ namespace glib {
 		std::list <int>::iterator i;
 		for (i = mKeyList.begin(); i != mKeyList.end(); i++) {
 			//if ((ret = GetAsyncKeyState(*i) )& 0x8000)
-			if ((ret = GetAsyncKeyState(*i)) & 0x8000)
+			if (ret = GetAsyncKeyState(*i))
 				return *i;
 		}
 		//can't find
