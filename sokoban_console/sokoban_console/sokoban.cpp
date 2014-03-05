@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "sokoban.h"
 #include "framework.h"
 
@@ -17,24 +18,16 @@ MTYPE *mStartMap;
 MTYPE *mCurrentMap;
 };
 */
-Sokoban::Sokoban() {
-	readMap(1);
-	r.stage = 1;
+Sokoban::Sokoban(long start) {
+	r.score = 0;
+	r.starttime = start;
+	mCurrentMap = glib::Framework::instance()->findScene("map")->getVRAM();
+	readMap(1);	
+	
 }
 
 void Sokoban::Save() {
 	std::ofstream savefile(SAVEFILE, std::ofstream::binary);
-	/*
-	int stage;
-	int mapw;
-	int maph;
-	int turn;
-	int left;
-	int reset;
-	int px, py, opx, opy; //player position
-	int ss, mm, hh;
-	int score;
-	*/
 
 	//save class
 	savefile.write((char*)&r, sizeof(record));
@@ -50,11 +43,16 @@ void Sokoban::Save() {
 }
 
 void Sokoban::Load() {
-	delete mStartMap;
+	
+	
 	std::ifstream savefile(SAVEFILE, std::ifstream::binary);	
+	if (savefile.fail())
+		return;
 	savefile.read((char*)&r, sizeof(record));	
-	mStartMap = new glib::Array2 <char>(r.mapw, r.maph);
-	mCurrentMap = glib::Framework::instance()->findScene("map")->getVRAM();
+	//Delete current mapArray because map size will change.
+	delete mStartMap;
+	mStartMap = new glib::Array2 <char>(r.mapw, r.maph);	
+	mCurrentMap->fill(' ');
 	for (int i = 0; i < r.mapw* r.maph; i++)
 		savefile >> (*mStartMap)(i);
 	for (int i = 0; i < r.maph; i++) {
@@ -63,6 +61,9 @@ void Sokoban::Load() {
 		}
 	}
 	savefile.close();
+	//recalculate start time
+	r.starttime = clock() - (r.hh * 3600 + r.mm * 60 + r.ss) * 1000;
+	
 }
 
 void Sokoban::readMap(int stage) {
@@ -70,25 +71,32 @@ void Sokoban::readMap(int stage) {
 	char c;
 	sprintf_s(fname, "%s%d%s", PREFIX, stage, EXT);
 
-	r.left = 0;
+	r.oleft = 0;
 	std::ifstream maptext(fname, std::ifstream::binary);
+	if (maptext.fail())
+		end();
+	r.score += stage * 10000;
+	r.stage = stage;
+
 	maptext >> std::dec >> r.mapw;
 	maptext >> std::dec >> r.maph;
-	mStartMap = new glib::Array2 <char>(r.mapw, r.maph);
-	mCurrentMap = glib::Framework::instance()->findScene("map")->getVRAM();
+	mCurrentMap->fill(' ');
+	mStartMap = new glib::Array2 <char>(r.mapw, r.maph);	
+	
 	for (int i = 0; i < r.maph; i++)
 	for (int j = 0; j < r.mapw; j++)
 	{
 		maptext >> c;
 		switch (c) {
 		case '#': (*mStartMap)(i,j) = WALL; break;
-		case 'O': (*mStartMap)(i,j) = BALL; r.left++;  break;
-		case 'o': (*mStartMap)(i, j) = BL_ON_EX; break;
-		case 'P': (*mStartMap)(i, j) = PLAYER; r.px = r.opx = j; r.py = r.opy = i;  break;
+		case 'O': (*mStartMap)(i,j) = BALL; r.oleft++;  break;
+		case 'o': (*mStartMap)(i,j) = BL_ON_EX; break;
+		case 'P': (*mStartMap)(i,j) = PLAYER; r.px = r.opx = j; r.py = r.opy = i;  break;
 		case '-': (*mStartMap)(i,j) = SPACE; break;
 		case 'X': (*mStartMap)(i,j) = EXIT; break;
 		}
 	}
+	r.left = r.oleft;
 	copyMap(mStartMap, mCurrentMap, r.mapw, r.maph);
 
 }
@@ -103,6 +111,7 @@ void Sokoban::resetMap() {
 	copyMap(mStartMap, mCurrentMap, r.mapw, r.maph);
 	r.px = r.opx;
 	r.py = r.opy;
+	r.left = r.oleft;
 }
 
 void Sokoban::updateMap(int dx, int dy) {
@@ -150,25 +159,16 @@ void Sokoban::updateMap(int dx, int dy) {
 	(*mCurrentMap)(r.py, r.px) == EXIT ? (*mCurrentMap)(r.py, r.px) = PL_ON_EX : (*mCurrentMap)(r.py, r.px) = PLAYER;
 
 }void Sokoban::clear() {
-	using namespace glib;
-	char buf[9];
-	if (r.stage == 1)
-		r.score = 0;
+	using namespace glib;	
 	r.stage++;
-	int cscore = r.stage * 10000 - r.turn * r.reset - r.hh * 3600 - r.mm * 60 - r.ss;
-	if (cscore > 0)
-		r.score += cscore;
 	
 	Framework* f = Framework::instance();
 	static Scene *menu = f->findScene("menu");	
-	static Scene *ss = f->findScene("score");
 	menu->set(CLEAR);
 	menu->Show();
 	f->draw();
-	Sleep(2000);
-	menu->Hide();
-	sprintf_s(buf,"%08d", r.score);
-	ss->set(buf);
+	Sleep(1000);
+	menu->Hide();	
 
 	//delete startmap
 	delete mStartMap;

@@ -6,8 +6,8 @@
 	"|         There were boxes that want to go back to their positions.           |\n"\
 	"|         Let it move..                                                       |\n"\
 	"|                                                                             |\n"\
-	"|                                                                             |\n"\
-	"|                                                                             |\n"\
+	"|                       PUSH PUSH 0.4                                         |\n"\
+	"|                                      by horong54                            |\n"\
 	"|                                                                             |\n"\
 	"|                                                                             |\n"\
 	"|                                                                             |\n"\
@@ -52,7 +52,7 @@
 	"|                                                           |>                |\n"\
 	"|                                                           |> _              |\n"\
 	"|                                                           |                 |\n"\
-	"+-----------------------------------------------------------¦ª-----------------+\n"
+	"+----------------------------------------------------------¦ª-----------------+\n"
 
 #define RESET \
 	"+--------------------------------------+"\
@@ -81,7 +81,7 @@
 
 #define WIDTH 80
 #define HEIGHT 24
-#define END 4
+#define END 5
 
 
 //map file name
@@ -95,11 +95,12 @@
 enum MTYPE{ SPACE='-', WALL='#', PLAYER='P', BALL='O', EXIT='X', PL_ON_EX='p', BL_ON_EX='o' };
 
 struct record {
+	long starttime;
 	int stage;
 	int mapw;
 	int maph;
 	int turn;
-	int left;
+	int left, oleft;
 	int reset;
 	int px, py, opx, opy; //player position
 	int ss, mm, hh;
@@ -108,7 +109,7 @@ struct record {
 class Sokoban {
 public:
 	record r;
-	Sokoban();
+	Sokoban(long start);
 	void readMap(int stage);
 	void Load(void);
 	void Save(void); 	

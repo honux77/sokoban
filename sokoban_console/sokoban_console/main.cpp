@@ -108,7 +108,7 @@ int main() {
 
 
 void glib::Framework::updateGame(int key) {	
-	static Sokoban soko;
+	static Sokoban soko(start);
 	char strbuf[32];	
 	char keystr[2];	
 	
@@ -117,15 +117,16 @@ void glib::Framework::updateGame(int key) {
 	static MENUFLAG mflag;
 	static Scene *cmd = findScene("cmd");
 	static Scene *menu = findScene("menu");
-	static Scene *time = findScene("time");
-	static Scene *map = findScene("map"); 		
+	static Scene *time = findScene("time");	
 	static Scene *reset = findScene("reset");
 	static Scene *turn = findScene("turn");
 	static Scene *left = findScene("left");
 	static Scene *stage = findScene("stage");
+	static Scene *ss = findScene("score");
 	
+		
 	//set time
-	TIME_END(end, start);
+	TIME_END(end, soko.r.starttime);
 	CONVERT(end, soko.r.ss, soko.r.mm, soko.r.hh);
 	sprintf_s(strbuf, "%02d:%02d:%02d", soko.r.hh, soko.r.mm, soko.r.ss);
 	time->set(strbuf);
@@ -135,6 +136,7 @@ void glib::Framework::updateGame(int key) {
 
 	sprintf_s(strbuf, "%08d", soko.r.left);
 	left->set(strbuf);
+	
 	
 	keystr[1] = '\0';	
 	keystr[0] = key;
@@ -208,8 +210,16 @@ void glib::Framework::updateGame(int key) {
 	sprintf_s(strbuf, "%08d", soko.r.turn);
 	turn->set(strbuf);
 	sprintf_s(strbuf, "%08d", soko.r.left);
-	left->set(strbuf);
-
+	left->set(strbuf);	
+	
+	int dscore = (soko.r.turn + soko.r.reset) /10 +1;
+	soko.r.score -= dscore;		
+	
+	if (soko.r.score <= (soko.r.stage * 1000))
+		soko.r.score = soko.r.stage *1000;
+	sprintf_s(strbuf, "%08d", soko.r.score);
+	ss->set(strbuf);
+	 
 	if (soko.r.left == 0)
 		soko.clear();
 

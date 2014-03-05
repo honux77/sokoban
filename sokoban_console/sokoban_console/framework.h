@@ -14,6 +14,8 @@
 #define SHOWFPS 1
 //dfault delay
 #define DELAY 100
+//LIMIT FPS
+#define FPS 8
 
 namespace glib {	
 
@@ -33,6 +35,7 @@ namespace glib {
 		int getWidth() { return mWidth; }
 		int getHeight() { return mHeight; }
 		int getSize() { return mWidth * mHeight; }
+		T* Array1() { return mArr; }
 		T& operator() (int idx) { return mArr[idx]; }
 		const T& operator() (int idx) const { return mArr[idx]; }
 		T& operator() (int row, int col) {
@@ -40,6 +43,10 @@ namespace glib {
 		}
 		const T& operator() (int row, int col) const {
 			return mArr[row * width + col];
+		}
+		void fill(T t) {
+			for (int i = 0; i < mWidth * mHeight; i++)
+				mArr[i] = t;
 		}
 	private:
 		T* mArr;

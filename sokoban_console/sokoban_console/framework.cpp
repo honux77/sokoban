@@ -102,10 +102,7 @@ namespace glib {
 				drawScene(*itor);
 		
 		int len = display->getSize();
-		char* buf = new char[len];		
-		
-		for (int i = 0; i < len; i++) 			
-			buf[i] = (*display)(i);
+		char *buf = display->Array1();		
 			
 		fwrite(buf, len, 1, stdout);
 		fflush(stdout);
@@ -113,8 +110,12 @@ namespace glib {
 		end = clock() - start;
 		dfps = 1000.0 / end;
 		sprintf_s(str, "fps:%4.2f", dfps);
+		if (dfps > FPS)
+			delay+=10;
+		else if (dfps < (FPS - 1) && delay > 0 )
+			delay-=10;
 		fpsScene->set(str, 0, 0);
-		delete[] buf;
+		
 	}	
 	int Framework::getInput() {
 		int ret;
