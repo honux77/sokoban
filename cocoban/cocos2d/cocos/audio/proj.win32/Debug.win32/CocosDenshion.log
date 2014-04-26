@@ -1,0 +1,26 @@
+﻿Build started 2014-04-26 오전 8:56:44.
+     1>Project "F:\dev\practice\cocoban\cocos2d\cocos\audio\proj.win32\CocosDenshion.vcxproj" on node 4 (Build target(s)).
+     1>ClCompile:
+         F:\dev\vs13\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\include" /I..\Include /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\renderer /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\ui /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\base /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\physics /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\math\kazmath /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\platform\win32 /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\platform\desktop /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\glfw3\include\win32 /I"F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\win32-specific\gles\include\OGLES" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _VARIADIC_MAX=10 /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4251 /analyze- /errorReport:prompt ..\win32\MciPlayer.cpp ..\win32\SimpleAudioEngine.cpp
+         MciPlayer.cpp
+         SimpleAudioEngine.cpp
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: '__useHeader' : macro redefinition (..\win32\MciPlayer.cpp)
+                 f:\dev\vs13\vc\include\sal.h(2886) : see previous definition of '__useHeader'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: '__on_failure' : macro redefinition (..\win32\MciPlayer.cpp)
+                 f:\dev\vs13\vc\include\sal.h(2896) : see previous definition of '__on_failure'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: '__useHeader' : macro redefinition (..\win32\SimpleAudioEngine.cpp)
+                 f:\dev\vs13\vc\include\sal.h(2886) : see previous definition of '__useHeader'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: '__on_failure' : macro redefinition (..\win32\SimpleAudioEngine.cpp)
+                 f:\dev\vs13\vc\include\sal.h(2896) : see previous definition of '__on_failure'
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsbody.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\win32\SimpleAudioEngine.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsshape.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\win32\SimpleAudioEngine.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\2d\platform\ccsaxparser.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\win32\SimpleAudioEngine.cpp)
+       Lib:
+         F:\dev\vs13\VC\bin\Lib.exe /OUT:"F:\dev\practice\cocoban\proj.win32\Debug.win32\libAudio.lib" /NOLOGO Debug.win32\MciPlayer.obj
+         Debug.win32\SimpleAudioEngine.obj
+         CocosDenshion.vcxproj -> F:\dev\practice\cocoban\proj.win32\Debug.win32\libAudio.lib
+     1>Done Building Project "F:\dev\practice\cocoban\cocos2d\cocos\audio\proj.win32\CocosDenshion.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:59.28

@@ -1,0 +1,90 @@
+﻿Build started 2014-04-26 오전 8:57:44.
+     1>Project "F:\dev\practice\cocoban\proj.win32\cocoban.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         F:\dev\vs13\VC\bin\CL.exe /c /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\audio\include /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\chipmunk\include\chipmunk /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\extensions /I..\Classes /I.. /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\renderer /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\ui /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\base /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\physics /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\math\kazmath /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\platform\win32 /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\cocos\2d\platform\desktop /IF:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\glfw3\include\win32 /I"F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\win32-specific\gles\include\OGLES" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USE_MATH_DEFINES /D GL_GLEXT_PROTOTYPES /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D COCOS2D_DEBUG=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _VARIADIC_MAX=10 /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\Classes\AppDelegate.cpp ..\Classes\HelloWorldScene.cpp main.cpp
+         AppDelegate.cpp
+         HelloWorldScene.cpp
+         main.cpp
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsbody.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (main.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsshape.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (main.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\2d\platform\ccsaxparser.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (main.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsbody.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\AppDelegate.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsshape.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\AppDelegate.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsbody.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\HelloWorldScene.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\physics\ccphysicsshape.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\HelloWorldScene.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\2d\platform\ccsaxparser.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\HelloWorldScene.cpp)
+     1>f:\dev\practice\cocoban\cocos2d\cocos\2d\platform\ccsaxparser.h : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss (..\Classes\AppDelegate.cpp)
+     1>f:\dev\practice\cocoban\classes\helloworldscene.cpp(57): warning C4996: 'cocos2d::LabelTTF::create': was declared deprecated
+                 f:\dev\practice\cocoban\cocos2d\cocos\2d\cclabelttf.h(75) : see declaration of 'cocos2d::LabelTTF::create'
+     1>f:\dev\practice\cocoban\classes\helloworldscene.cpp(61): warning C4996: 'cocos2d::LabelTTF::getContentSize': was declared deprecated
+                 f:\dev\practice\cocoban\cocos2d\cocos\2d\cclabelttf.h(154) : see declaration of 'cocos2d::LabelTTF::getContentSize'
+                 f:\dev\practice\cocoban\cocos2d\cocos\2d\cclabelttf.h(154) : see declaration of 'cocos2d::LabelTTF::getContentSize'
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug.win32\game.res" game.rc 
+       PreLinkEvent:
+         if not exist "F:\dev\practice\cocoban\proj.win32\Debug.win32\" mkdir "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\websockets\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         :VCEnd
+         2개 파일이 복사되었습니다.
+       Link:
+         F:\dev\vs13\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\dev\practice\cocoban\proj.win32\Debug.win32\cocoban.exe" /INCREMENTAL /NOLOGO /LIBPATH:F:\dev\practice\cocoban\proj.win32\Debug.win32\ /LIBPATH:F:\dev\practice\cocoban\proj.win32\Debug.win32\ opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib glfw3.lib freetype250.lib winmm.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\dev\practice\cocoban\proj.win32\Debug.win32\cocoban.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\dev\practice\cocoban\proj.win32\Debug.win32\cocoban.lib" /MACHINE:X86 /SAFESEH Debug.win32\game.res
+         Debug.win32\AppDelegate.obj
+         Debug.win32\HelloWorldScene.obj
+         Debug.win32\main.obj
+         F:\dev\practice\cocoban\proj.win32\Debug.win32\libcocos2d.lib
+         F:\dev\practice\cocoban\proj.win32\Debug.win32\libAudio.lib
+         F:\dev\practice\cocoban\proj.win32\Debug.win32\libchipmunk.lib
+     1>AppDelegate.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'libcmtd.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>libjpeg.lib(jcapimin.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcapimin.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcapistd.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcapistd.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcarith.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcarith.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcparam.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcparam.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdatadst.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdatadst.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcinit.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcinit.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmaster.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcmaster.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmarker.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcmarker.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmainct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcmainct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcprepct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcprepct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jccoefct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jccoefct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jccolor.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jccolor.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcsample.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcsample.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jchuff.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jchuff.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcdctmgr.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcdctmgr.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctfst.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jfdctfst.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctflt.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jfdctflt.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctint.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jfdctint.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdapimin.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdapimin.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdapistd.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdapistd.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdarith.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdarith.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdatasrc.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdatasrc.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmaster.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdmaster.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdinput.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdinput.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmarker.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdmarker.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdhuff.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdhuff.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmainct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdmainct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdcoefct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdcoefct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdpostct.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdpostct.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jddctmgr.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jddctmgr.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctfst.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jidctfst.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctflt.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jidctflt.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctint.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jidctint.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdsample.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdsample.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdcolor.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdcolor.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jquant1.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jquant1.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jquant2.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jquant2.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmerge.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jdmerge.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jaricom.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jaricom.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcomapi.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jcomapi.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jutils.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jutils.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jerror.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jerror.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jmemmgr.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jmemmgr.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jmemnobs.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libjpeg.lib(jmemnobs.obj)' or at 'F:\dev\practice\cocoban\proj.win32\Debug.win32\vc110.pdb'; linking object as if no debug info
+         cocoban.vcxproj -> F:\dev\practice\cocoban\proj.win32\Debug.win32\cocoban.exe
+     1>Done Building Project "F:\dev\practice\cocoban\proj.win32\cocoban.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:08.67

@@ -1,0 +1,33 @@
+﻿Build started 2014-04-26 오전 9:23:17.
+     1>Project "F:\dev\practice\cocoban\cocos2d\cocos\2d\cocos2d.vcxproj" on node 2 (Build target(s)).
+     1>PreLinkEvent:
+         if not exist "F:\dev\practice\cocoban\proj.win32\Debug.win32\" mkdir "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\freetype2\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\glfw3\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\curl\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\jpeg\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\png\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\tiff\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\webp\prebuilt\win32\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\win32-specific\zlib\prebuilt\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\win32-specific\icon\prebuilt\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         xcopy /Y /Q "F:\dev\practice\cocoban\cocos2d\cocos\2d\..\..\external\win32-specific\gles\prebuilt\*.*" "F:\dev\practice\cocoban\proj.win32\Debug.win32\"
+         
+         :VCEnd
+         1개 파일이 복사되었습니다.
+         1개 파일이 복사되었습니다.
+         2개 파일이 복사되었습니다.
+         1개 파일이 복사되었습니다.
+         1개 파일이 복사되었습니다.
+         2개 파일이 복사되었습니다.
+         1개 파일이 복사되었습니다.
+         2개 파일이 복사되었습니다.
+         2개 파일이 복사되었습니다.
+         2개 파일이 복사되었습니다.
+       Lib:
+         cocos2d.vcxproj -> F:\dev\practice\cocoban\proj.win32\Debug.win32\libcocos2d.lib
+     1>Done Building Project "F:\dev\practice\cocoban\cocos2d\cocos\2d\cocos2d.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.43
